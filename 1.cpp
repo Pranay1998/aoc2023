@@ -18,7 +18,6 @@ int main() {
 void part1() {
     std::ifstream ifs("1.txt");
     std::string line;
-    int line_num = 0;
     int sum = 0;
     while (std::getline(ifs, line)) {
         char *firstDigit = nullptr;
@@ -26,7 +25,6 @@ void part1() {
         for (int i = 0; i < line.size(); i++) {
             if (line[i] >= '0' && line[i] <= '9') {
                 if (firstDigit == nullptr) {
-
                     firstDigit = &line[i];
                 }
                 lastDigit = &line[i];
@@ -56,7 +54,6 @@ void part2() {
 
     std::ifstream ifs("1.txt");
     std::string line;
-    int line_num = 0;
     int sum = 0;
     while (std::getline(ifs, line)) {
 
