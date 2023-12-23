@@ -141,8 +141,10 @@ input = """...................305.124................................432........
 
 x = input.split("\n")
 
+# position : length
 numbers_map = {}
-symbols_set = set()
+# position
+gear_set = set()
 i = 0
 while i < len(x):
     j = 0
@@ -157,7 +159,7 @@ while i < len(x):
                 start = -1
         
         if x[i][j] == '*':
-            symbols_set.add((i, j))
+            gear_set.add((i, j))
 
         j+=1
     i+=1
@@ -225,8 +227,8 @@ for pos, length in numbers_map.items():
     if symbol_adj(pos, length):
         total += int(x[pos[0]][pos[1]:pos[1] + length])
 
-print(symbols_set)
-for pos in symbols_set:
+print(gear_set)
+for pos in gear_set:
     total2 += gear_val(pos) 
 
 print(total)
