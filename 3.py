@@ -180,13 +180,18 @@ def find_number_start(pos):
 #.....
 #.123.
 #.....
-# return true if any sumbol is adjacent to numer
-# unexpected behaviour if pos does not contain to number
+# return true if adjacent to numer
 def symbol_adj(pos, length):
-    for i in [pos[0] - 1, pos[0], pos[0] + 1]:
+    for i in [pos[0] - 1, pos[0] + 1]:
         for j in range(pos[1] - 1, pos[1] + length + 1):
             if in_range(i, j) and not x[i][j].isdigit() and not x[i][j] == '.':
                 return True
+            
+    if in_range(pos[0], pos[1] - 1) and not x[pos[0]][pos[1] - 1].isdigit() and not x[pos[0]][pos[1] - 1] == '.':
+        return True
+    
+    if in_range(pos[0], pos[1] + length) and not x[pos[0]][pos[1] + length].isdigit() and not x[pos[0]][pos[1] + length] == '.':
+        return True
 
     return False
 
@@ -194,13 +199,12 @@ def symbol_adj(pos, length):
 #.*.
 #...
 # if pos only has 2 adjacent numbers returns product of those numbers, otherwise returns 0
-# unexpected behaviour if pos does not contain gear
 def gear_val(pos):
     adj_nums = set()
 
     for i in [pos[0] - 1, pos[0], pos[0] + 1]:
         for j in [pos[1] - 1, pos[1], pos[1] + 1]:
-            if in_range(i, j) and x[i][j].isdigit():
+            if in_range(i, j) and not pos == (i, j) and x[i][j].isdigit():
                 adj_nums.add(find_number_start((i, j)))
 
 
