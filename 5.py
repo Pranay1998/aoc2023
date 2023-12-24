@@ -208,7 +208,7 @@ values = temp
 
 # Return the intersection of a, b, when a, b are intervals in form (start, end)
 def intersect(a, b):
-        # Check for overlapping intervals
+    # Check for overlapping intervals
     if a[0] < b[1] and b[0] < a[1]:
         return [max(a[0], b[0]), min(a[1], b[1])]
     else:
@@ -216,6 +216,7 @@ def intersect(a, b):
 
 # Return a - b, when a, b are intervals in form (start, end)
 # Return a list of intervals
+# set thoery -> a - b = a - (a intersect b)
 def difference(a, b):
     result = []
 
@@ -246,7 +247,6 @@ def map(mappings):
                 for diff in difference(value, intersection):
                     queue.append(diff) 
                 
-                # todo map intersections before adding to ret list
                 diff = mapping[1][0] - mapping[0][0]
                 result.append((intersection[0] + diff, intersection[1] + diff))
                 intersected = True
@@ -259,12 +259,14 @@ def map(mappings):
 mappings = []
 first = False
 for i in range(1, len(x)):
+    # New mappings
     if x[i] != "" and "map" not in x[i]:
         m = x[i].strip().split(" ")
         m = [int(i) for i in m]
         # [(source_start, source_end), (dest_start, dest_end)]
         m = ((m[1], m[1] + m[2]), (m[0], m[0] + m[2]))
         mappings.append(m)
+    # Fininshed mappings, map from one step to the next
     if "map" in x[i] or i == len(x) - 1:
         if not first:
             first = True
