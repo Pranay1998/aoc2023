@@ -16,7 +16,7 @@ int main() {
 }
 
 void part1() {
-    std::ifstream ifs("1.txt");
+    std::ifstream ifs("inputs/1.txt");
     std::string line;
     int sum = 0;
     while (std::getline(ifs, line)) {

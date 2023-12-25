@@ -14,7 +14,7 @@ int main() {
 }
 
 void part1() {
-    std::ifstream ifs("2.txt");
+    std::ifstream ifs("inputs/2.txt");
     std::string line;
     std::string::size_type game_num = 1;
     std::string::size_type sum = 0;
