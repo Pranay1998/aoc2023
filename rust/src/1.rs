@@ -1,9 +1,3 @@
-fn main() {
-    let input = std::fs::read_to_string("inputs/1.txt").unwrap();
-    println!("Part 1 Answer: {}", part1(&input));
-    println!("Part 2 Answer: {}", part2(&input));
-}
-
 fn part1(input: &str) -> u32 {
     input
         .lines()
@@ -53,6 +47,12 @@ fn part2(input: &str) -> u32 {
             }
         })
         .sum()
+}
+
+fn main() {
+    let input = std::fs::read_to_string("inputs/1.txt").unwrap();
+    println!("Part 1 Answer: {}", part1(&input));
+    println!("Part 2 Answer: {}", part2(&input));
 }
 
 #[cfg(test)]

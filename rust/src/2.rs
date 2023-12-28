@@ -17,12 +17,6 @@ impl Cubes {
     }
 }
 
-fn main() {
-    let input = std::fs::read_to_string("inputs/2.txt").unwrap();
-    println!("Part 1 Answer: {}", part1(&input));
-    println!("Part 2 Answer: {}", part2(&input));
-}
-
 fn part1(input: &str) -> u32 {
     let mut valid_games: u32 = 0;
     for (idx, line) in input.lines().enumerate() {
@@ -87,6 +81,12 @@ fn part2(input: &str) -> u32 {
         total += min_cubes.red * min_cubes.green * min_cubes.blue;
     }
     total
+}
+
+fn main() {
+    let input = std::fs::read_to_string("inputs/2.txt").unwrap();
+    println!("Part 1 Answer: {}", part1(&input));
+    println!("Part 2 Answer: {}", part2(&input));
 }
 
 #[cfg(test)]
