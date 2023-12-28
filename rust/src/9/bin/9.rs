@@ -1,5 +1,5 @@
 fn main() {
-    let input = std::fs::read_to_string("inputs/4.txt").unwrap();
+    let input = std::fs::read_to_string("inputs/9.txt").unwrap();
     println!("Part 1 Answer: {}", part1(&input));
     println!("Part 2 Answer: {}", part2(&input));
 }
