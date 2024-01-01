@@ -1,4 +1,3 @@
-use core::panic;
 use std::collections::HashMap;
 
 fn hash(input: &str) -> u32 {
@@ -38,60 +37,32 @@ fn part2(input: &str) -> u32 {
     for lens in input.split(',') {
         if lens.contains('=') {
             let lens = Lens::new(lens);
+            let lens_list = lens_map.entry(lens.hash).or_insert(vec![]);
 
-            if !lens_map.contains_key(&lens.hash) {
-                lens_map.insert(lens.hash, vec![lens]);
-            } else {
-                let lens_list = lens_map.get_mut(&lens.hash).unwrap();
-
-                let mut found = false;
-                for i in 0..lens_list.len() {
-                    if lens_list[i].name == lens.name {
-                        lens_list[i] = lens.clone();
-                        found = true;
-                        break;
-                    }
-                }
-
-                if !found {
-                    lens_list.push(lens);
-                }
+            match lens_list.iter().position(|l| l.name == lens.name) {
+                Some(index) => { lens_list[index] = lens; },
+                None => { lens_list.push(lens.clone()); }
             }
         } else if lens.contains('-') {
             let key = lens.split_once('-').unwrap().0;
             let hash = hash(key);
 
-            match lens_map.get_mut(&hash) {
-                Some(lens_list) => {
-                    let mut index: Option<usize> = None;
-
-                    for i in 0..lens_list.len() {
-                        if lens_list[i].name == key {
-                            index = Some(i);
-                            break;
-                        }
-                    }
-
-                    if index.is_some() {
-                        lens_list.remove(index.unwrap());
-                    }
-                },
-                None => (),
+            if let Some(lens_list) = lens_map.get_mut(&hash) {
+                lens_list.retain(|lens| lens.name != key)
             }
-        } else {
-            panic!("Invalid input");
         }
     }
 
-    let mut total: u32 = 0;
-
-    for (hash, lens_list) in lens_map.iter() {
-        for (index, lens) in lens_list.iter().enumerate() {
-            total += (hash + 1) * (index as u32 + 1) * lens.focal_length;
-        }
-    }
-
-    total
+    lens_map
+        .iter()
+        .map(|(hash, lens_list)| {
+            lens_list
+                .iter()
+                .enumerate()
+                .map(|(index, lens)| (hash + 1) * (index as u32 + 1) * lens.focal_length)
+                .sum::<u32>()
+        })
+        .sum()
 }
 
 fn main() {
@@ -108,5 +79,11 @@ mod tests {
     fn test_part1() {
         let input = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7";
         assert!(part1(input) == 1320);
+    }
+
+    #[test]
+    fn test_part2() {
+        let input = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7";
+        assert!(part2(input) == 145);
     }
 }
